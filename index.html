@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8" />
+<title>WW Public knowledge base chat</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root { --header-h:48px }
+  *{box-sizing:border-box} html,body{height:100%;margin:0;background:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111}
+  header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:#fff;border-bottom:1px solid #ccc;display:flex;align-items:center;justify-content:center;z-index:10}
+  header .title{font-size:14px;letter-spacing:.5px;text-transform:uppercase;color:#333}
+  main{padding-top:var(--header-h);min-height:calc(100vh - var(--header-h) - 80px);display:flex;align-items:center;justify-content:center}
+  .bot-frame{width:100%;height:80vh;border:1px solid #ccc;border-radius:6px;background:#fff}
+  footer{display:flex;align-items:center;justify-content:flex-end;gap:16px;height:80px;padding:0 16px;border-top:1px solid #ccc;background:#f7f7f7}
+  footer small{color:#555;margin-right:auto}
+</style>
+</head>
+<body>
+<header><div class="title">WW Public knowledge base chat</div></header>
+
+<main>
+  <iframe class="bot-frame" title="WW Knowledge Base Chat"
+    src="https://www.chatbase.co/chatbot-iframe?chatbotId=YOUR_MAIN_BOT_ID"></iframe>
+</main>
+
+<footer>
+  <small>© <span id="y"></span> WW</small>
+
+  <!-- Hidden sitemap link -->
+  <a id="sitemap-link" href="sitemap_20251015_233046.xml" style="display:none" aria-hidden="true">Sitemap</a>
+
+  <!-- Footer chat bubble on right side with secret key -->
+  <div id="footer-chat"></div>
+  <script>
+    (function(){
+      if(!window.chatbase||window.chatbase("getState")!=="initialized"){
+        window.chatbase=(...a)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(a)};
+        window.chatbase=new Proxy(window.chatbase,{get(t,p){if(p==="q"){return t.q}return(...a)=>t(p,...a)}});
+      }
+      const onLoad=function(){
+        const s=document.createElement("script");
+        s.src="https://www.chatbase.co/embed.min.js";
+        s.id="I6jy6AJSz-klqRQYeosXu";
+        s.domain="www.chatbase.co";
+        s.dataset.secret="22n3jhe7su0diu609xwhinj382q7hbg5";
+        document.body.appendChild(s);
+      };
+      if(document.readyState==="complete"){onLoad()} else {window.addEventListener("load",onLoad)}
+    })();
+    document.addEventListener('DOMContentLoaded',()=>{const y=document.getElementById('y'); if(y) y.textContent=new Date().getFullYear();});
+  </script>
+</footer>
+</body></html>
