@@ -1,0 +1,18 @@
+cat > _config.yml << 'EOF'
+# Site settings
+title: WW Automated Assistant
+description: Automated assistant for Whirlwind Steel
+baseurl: "" # Leave empty for root domain
+url: "https://wwchat.leantoolbox.org"
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-minimal
+
+# Exclude files
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+EOF
+
