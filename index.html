@@ -1,39 +1,146 @@
-<!doctype html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8" />
-<title>WW Public knowledge base chat</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WW Automated Assistant</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <style>
-  :root { --header-h:48px }
-  *{box-sizing:border-box} html,body{height:100%;margin:0;background:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111}
-  header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:#fff;border-bottom:1px solid #ccc;display:flex;align-items:center;justify-content:center;z-index:10}
-  header .title{font-size:14px;letter-spacing:.5px;text-transform:uppercase;color:#333}
-  main{padding-top:var(--header-h);min-height:calc(100vh - var(--header-h) - 80px);display:flex;align-items:center;justify-content:center}
-  .bot-frame{width:100%;height:80vh;border:1px solid #ccc;border-radius:6px;background:#fff}
-  footer{display:flex;align-items:center;justify-content:flex-end;gap:16px;height:80px;padding:0 16px;border-top:1px solid #ccc;background:#f7f7f7}
-  footer small{color:#555;margin-right:auto}
+  :root { --header-h:32px; --footer-h:56px; }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111}
+
+  header{
+    position:fixed;inset:0 0 auto 0;height:var(--header-h);
+    background:#fff;border-bottom:1px solid #ddd;
+    display:flex;align-items:center;justify-content:center;z-index:10;padding:0 8px;
+  }
+  header a.logo{position:absolute;left:8px;display:inline-flex;align-items:center;height:100%}
+  header a.logo img{height:22px;width:auto}
+  header .title{font-size:12px;letter-spacing:.35px;text-transform:uppercase;color:#333}
+
+  .notice {
+    position:fixed;
+    top:var(--header-h);
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:12px;
+    color:#444;
+    background:#fff;
+    padding:6px 0;
+    border-bottom:1px solid #eee;
+    z-index:9;
+  }
+
+  .chat-wrap{
+    position:fixed;
+    top:calc(var(--header-h) + 38px);
+    left:0;
+    right:0;
+    bottom:calc(var(--footer-h) + env(safe-area-inset-bottom,0px));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    padding:20px;
+    overflow:hidden;
+  }
+  .chat-box{
+    width:100%;
+    height:100%;
+    max-width:1080px;
+    max-height:900px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  .chat-box iframe{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+  }
+
+  footer{
+    position:fixed;
+    inset:auto 0 0 0;
+    height:var(--footer-h);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    padding:0 14px calc(env(safe-area-inset-bottom,0px));
+    border-top:1px solid #ddd;
+    background:#f8f8f8;
+    z-index:10;
+  }
+  footer small{color:#555;font-size:11px}
+  footer .prompt{font-size:13px;color:#222;font-weight:500;white-space:nowrap;}
+
+  /* Shrink the embedded Chatbase bubble */
+  .chatbase-iframe-wrapper {
+    position:fixed;
+    right:20px;
+    bottom:6px;
+    transform:scale(0.6);
+    transform-origin:bottom right;
+    z-index:50;
+    pointer-events:auto;
+  }
+
+  @media (max-width:768px){
+    .chat-wrap{padding:10px}
+    .chat-box{border-radius:8px}
+    .chatbase-iframe-wrapper{
+      right:10px;
+      bottom:3px;
+      transform:scale(0.5);
+    }
+  }
 </style>
 </head>
 <body>
-<header><div class="title">WW Public knowledge base chat</div></header>
+  <header>
+    <a class="logo" href="https://whirlwindsteel.com" target="_blank" rel="noopener">
+      <img src="Whirlwind_Logo.webp" alt="WW Logo">
+    </a>
+    <div class="title">WW Automated Assistant</div>
+  </header>
 
-<main>
-  <iframe class="bot-frame" title="WW Knowledge Base Chat"
-    src="https://www.chatbase.co/chatbot-iframe?chatbotId=YOUR_MAIN_BOT_ID"></iframe>
-</main>
+  <div class="notice">
+    This is 100% based on public documentation from <a href="https://whirlwindsteel.com" target="_blank" rel="noopener">whirlwindsteel.com</a>.
+  </div>
 
-<footer>
-  <small>© <span id="y"></span> WW</small>
+  <div class="chat-wrap">
+    <div class="chat-box">
+      <iframe
+        title="WW Automated Assistant Chat"
+        src="https://www.chatbase.co/chatbot-iframe/I6jy6AJSz-klqRQYeosXu"
+        loading="eager"
+        allow="clipboard-write"></iframe>
+    </div>
+  </div>
 
-  <!-- Hidden sitemap link -->
-  <a id="sitemap-link" href="sitemap_20251015_233046.xml" style="display:none" aria-hidden="true">Sitemap</a>
+  <footer>
+    <small>© <span id="y"></span> WW</small>
+    <div class="prompt">Try the embeddable chat bubble →</div>
+  </footer>
 
-  <!-- Footer chat bubble on right side with secret key -->
-  <div id="footer-chat"></div>
   <script>
+    // Footer year
+    document.addEventListener('DOMContentLoaded',()=>{
+      const y=document.getElementById('y');
+      if(y) y.textContent=new Date().getFullYear();
+    });
+
+    // Load Chatbase bubble and then shrink it
     (function(){
       if(!window.chatbase||window.chatbase("getState")!=="initialized"){
-        window.chatbase=(...a)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(a)};
-        window.chatbase=new Proxy(window.chatbase,{get(t,p){if(p==="q"){return t.q}return(...a)=>t(p,...a)}});
+        window.chatbase=(...a)=>{(window.chatbase.q=window.chatbase.q||[]).push(a)};
+        window.chatbase=new Proxy(window.chatbase,{get(t,p){if(p==="q")return t.q;return(...a)=>t(p,...a)}});
       }
       const onLoad=function(){
         const s=document.createElement("script");
@@ -41,11 +148,21 @@
         s.id="I6jy6AJSz-klqRQYeosXu";
         s.domain="www.chatbase.co";
         s.dataset.secret="22n3jhe7su0diu609xwhinj382q7hbg5";
+        s.onload=function(){
+          setTimeout(()=>{
+            const bubble=document.querySelector('iframe[src*="chatbase.co"]:not([title])');
+            if(bubble && !bubble.parentElement.classList.contains('chatbase-iframe-wrapper')){
+              const wrap=document.createElement('div');
+              wrap.className='chatbase-iframe-wrapper';
+              bubble.parentNode.insertBefore(wrap,bubble);
+              wrap.appendChild(bubble);
+            }
+          },1500);
+        };
         document.body.appendChild(s);
       };
       if(document.readyState==="complete"){onLoad()} else {window.addEventListener("load",onLoad)}
     })();
-    document.addEventListener('DOMContentLoaded',()=>{const y=document.getElementById('y'); if(y) y.textContent=new Date().getFullYear();});
   </script>
-</footer>
-</body></html>
+</body>
+</html>
